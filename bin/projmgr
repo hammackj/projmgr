@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+# projmgr - A source code control managment tool
+# 
+# hammackj - 12-27-2010 - Version 0.0.1 
+#
+
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
+
+$stdout.sync = true
+$stderr.sync = true
+
+require 'projmgr'
+
+module ProjMgr
+	
+	
+
+end
