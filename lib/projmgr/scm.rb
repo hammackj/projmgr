@@ -8,9 +8,9 @@ module ProjMgr
 		
 		#
 		#
-		def initialize project, prefix, root
+		def initialize project, path, root
 			@project = project
-			@prefix = prefix
+			@path = path
 			@root = root
 		end	
 	end
