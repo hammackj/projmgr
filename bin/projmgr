@@ -15,6 +15,86 @@ require 'projmgr'
 
 module ProjMgr
 	
-	
+	class ProjMgr		
+		def main
+			Choice.options do
+				banner "ProjMgr - v#{VERSION}" 
+				header 'Jacob Hammack'
+		    header 'http://hammackj.com'
+		  	header 'Usage: projmgr [OPTIONS]'
+		    header ''
 
+		    option :check_local_changes do
+		      short '-c'
+		      long '--check_local_changes'
+		      desc 'Checks local changes in configured scm repositories'
+		    end
+	
+			  option :update do
+		      short '-u'
+		      long '--update'
+		      desc 'Updates each configured scm repository'
+		    end
+
+				separator ''
+				separator 'Other Options'
+
+		    option :help do
+		      short '-h'
+		      long '--help'
+		      desc 'Show this message'
+		    end
+
+		    option :version do
+		      short '-v'
+		      long '--version'
+		      desc 'Show version'
+		      action do
+		        puts "ProjMgr - v#{VERSION}"
+		        exit
+		      end
+		  	end
+	
+					footer ''
+				end
+		
+				if ARGV.length == 0
+				  puts Choice.help
+				end
+				
+				#TODO UNHARDCODE THIS
+				@repos = YAML.load_file "./test.yml"
+				@root = `pwd`
+				
+				if Choice.choices[:check_local_changes] != nil
+					@repos.each_key do |key|
+						if @repos[key]['type'] == "svn"
+							repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+							puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
+						elsif @repos[key]['type'] == "git"
+							repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+							puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
+						end
+					end
+				end
+				
+				if Choice.choices[:update] != nil
+					@repos.each_key do |key|
+						if @repos[key]['type'] == "svn"
+							repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+							puts "[*] Updating #{@repos[key]['name']} ..."
+							repo.update
+						elsif @repos[key]['type'] == "git"
+							repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+							puts "[*] Updating #{@repos[key]['name']} ..."
+							repo.update
+						end
+					end
+				end
+				
+			end
+		end
 end
+
+app = ProjMgr::ProjMgr.new
+app.main
