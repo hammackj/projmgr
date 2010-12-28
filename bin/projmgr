@@ -65,33 +65,24 @@ module ProjMgr
 				#TODO UNHARDCODE THIS
 				@repos = YAML.load_file "./test.yml"
 				@root = `pwd`
-				
-				if Choice.choices[:check_local_changes] != nil
-					@repos.each_key do |key|
-						if @repos[key]['type'] == "svn"
-							repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
-							puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
-						elsif @repos[key]['type'] == "git"
-							repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
-							puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
-						end
+							
+				@repos.each_key do |key|			
+					if @repos[key]['type'] == "svn"
+						repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+					elsif @repos[key]['type'] == "git"
+						repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+					else
+						puts "#{key} is a malformed entry please correct it."
+						next
 					end
-				end
-				
-				if Choice.choices[:update] != nil
-					@repos.each_key do |key|
-						if @repos[key]['type'] == "svn"
-							repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
-							puts "[*] Updating #{@repos[key]['name']} ..."
-							repo.update
-						elsif @repos[key]['type'] == "git"
-							repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
-							puts "[*] Updating #{@repos[key]['name']} ..."
-							repo.update
-						end
+															
+					if Choice.choices[:check_local_changes] != nil
+						puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
+					elsif Choice.choices[:update] != nil
+						puts "[*] Updating #{@repos[key]['name']} ..."
+						repo.update
 					end
-				end
-				
+				end				
 			end
 		end
 end
