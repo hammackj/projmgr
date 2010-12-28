@@ -1,3 +1,5 @@
+require 'projmgr/scm'
+
 #
 #
 module ProjMgr
@@ -9,7 +11,7 @@ module ProjMgr
 		#
 		#
 		def update
-	  	results = system('cd #{@prefix}/#{@project} && git pull && cd #{@root}')
+	  	results = `cd #{@path} && git pull && cd #{@root}`
 
 	  	if results =~ /Already up-to-date./
 	  	  print "Already up-to-date!\n"
@@ -21,7 +23,7 @@ module ProjMgr
 		#
 		#
 		def has_local_changes?
-		  results = system('cd #{@prefix}/#{@project} && git status && cd #{@root}')
+		  results = `cd #{@path} && git status && cd #{@root}`
 
 		  if results !~ /nothing to commit/ 
 				return true
