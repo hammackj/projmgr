@@ -20,46 +20,46 @@ module ProjMgr
 			Choice.options do
 				banner "ProjMgr - v#{VERSION}" 
 				header 'Jacob Hammack'
-		    header 'http://hammackj.com'
-		  	header 'Usage: projmgr [OPTIONS]'
-		    header ''
+				header 'http://hammackj.com'
+				header 'Usage: projmgr [OPTIONS]'
+				header ''
 
-		    option :check_local_changes do
-		      short '-c'
-		      long '--check_local_changes'
-		      desc 'Checks local changes in configured scm repositories'
-		    end
+				option :check_local_changes do
+					short '-c'
+					long '--check_local_changes'
+					desc 'Checks local changes in configured scm repositories'
+				end
 	
-			  option :update do
-		      short '-u'
-		      long '--update'
-		      desc 'Updates each configured scm repository'
-		    end
+				option :update do
+					short '-u'
+					long '--update'
+					desc 'Updates each configured scm repository'
+				end
 
 				separator ''
 				separator 'Other Options'
 
-		    option :help do
-		      short '-h'
-		      long '--help'
-		      desc 'Show this message'
-		    end
+				option :help do
+					short '-h'
+					long '--help'
+					desc 'Show this message'
+				end
 
-		    option :version do
-		      short '-v'
-		      long '--version'
-		      desc 'Show version'
-		      action do
-		        puts "ProjMgr - v#{VERSION}"
-		        exit
-		      end
-		  	end
+				option :version do
+					short '-v'
+					long '--version'
+					desc 'Show version'
+					action do
+						puts "ProjMgr - v#{VERSION}"
+						exit
+					end
+				end
 	
 					footer ''
 				end
 		
 				if ARGV.length == 0
-				  puts Choice.help
+					puts Choice.help
 				end
 				
 				#TODO UNHARDCODE THIS
