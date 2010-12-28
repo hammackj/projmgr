@@ -46,8 +46,8 @@ module ProjMgr
 					action do						
 						if File.exists?(File.expand_path(CONFIG_FILE)) == false
 							File.open(File.expand_path(CONFIG_FILE), 'w+') do |f| 
-								f.write("projectname: \nname: \npath: \ntype: \n\n") 
-								f.write("projectname: \nname: \npath: \ntype: \n") 
+								f.write("projectname: \n\tname: \n\tpath: \n\ttype: \n\n") 
+								f.write("projectname: \n\tname: \n\tpath: \n\ttype: \n") 
 							end
 
 							puts "[*] An empty #{CONFIG_FILE} has been created. Please edit and fill in the correct values."
@@ -86,10 +86,10 @@ module ProjMgr
 					puts Choice.help
 				end
 			
-				if File.exists?(@config_file)
-					@repos = YAML.load_file @config_file
+				if File.exists?(File.expand_path(CONFIG_FILE))
+					@repos = YAML.load_file File.expand_path(CONFIG_FILE)
 				else
-					puts "[!] #{@config_file} does not exist. Please run projmgr --create-config, to create it."
+					puts "[!] #{CONFIG_FILE} does not exist. Please run projmgr --create-config, to create it."
 					exit
 				end
 					
