@@ -15,7 +15,11 @@ require 'projmgr'
 
 module ProjMgr
 	
-	class ProjMgr		
+	class ProjMgr
+		def initialize
+			@root = `pwd`
+		end
+			
 		def main
 			Choice.options do
 				banner "ProjMgr - v#{VERSION}" 
@@ -35,6 +39,25 @@ module ProjMgr
 					long '--update'
 					desc 'Updates each configured scm repository'
 				end
+				
+				option :create_config do
+          long '--create-config'
+          desc 'Creates a skeleton config file to use'
+					action do						
+						if File.exists?(File.expand_path(CONFIG_FILE)) == false
+							File.open(File.expand_path(CONFIG_FILE), 'w+') do |f| 
+								f.write("projectname: \nname: \npath: \ntype: \n\n") 
+								f.write("projectname: \nname: \npath: \ntype: \n") 
+							end
+
+							puts "[*] An empty #{CONFIG_FILE} has been created. Please edit and fill in the correct values."
+							exit
+						else
+							puts "[!]  #{CONFIG_FILE} already exists. Please delete it if you wish to re-create it."
+							exit
+						end
+					end
+        end
 
 				separator ''
 				separator 'Other Options'
@@ -58,31 +81,41 @@ module ProjMgr
 					footer ''
 				end
 		
+
 				if ARGV.length == 0
 					puts Choice.help
 				end
-				
-				#TODO UNHARDCODE THIS
-				@repos = YAML.load_file "./test.yml"
-				@root = `pwd`
-							
-				@repos.each_key do |key|			
-					if @repos[key]['type'] == "svn"
-						repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
-					elsif @repos[key]['type'] == "git"
-						repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
-					else
-						puts "#{key} is a malformed entry please correct it."
-						next
-					end
+			
+				if File.exists?(@config_file)
+					@repos = YAML.load_file @config_file
+				else
+					puts "[!] #{@config_file} does not exist. Please run projmgr --create-config, to create it."
+					exit
+				end
+					
+				begin
+					@repos.each_key do |key|			
+						if @repos[key]['type'] == "svn"
+							repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+						elsif @repos[key]['type'] == "git"
+							repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+						end
+					
+						if repo == nil
+								puts "[!] #{key} is a malformed entry please correct it."
+								next
+						end
 															
-					if Choice.choices[:check_local_changes] != nil
-						puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
-					elsif Choice.choices[:update] != nil
-						puts "[*] Updating #{@repos[key]['name']} ..."
-						repo.update
+						if Choice.choices[:check_local_changes] != nil
+							puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
+						elsif Choice.choices[:update] != nil
+							puts "[*] Updating #{@repos[key]['name']} ..."
+							repo.update
+						end
 					end
-				end				
+				rescue Exception => e
+					puts "[!] Caught Exception: #{e.inspect}"
+				end
 			end
 		end
 end
