@@ -1,6 +1,7 @@
 
 module ProjMgr
 	VERSION = "0.0.1"
+	CONFIG_FILE = "~/.projmgr"
 end
 
 require 'rubygems'
