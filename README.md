@@ -25,7 +25,8 @@ Using ProjMgr is fairly simple. Once installation is complete type to create a s
 	% projmgr --create-file
 	[*] An empty ~/.projmgr has been created. Please edit and fill in the correct values.
 
-This will create a empty skeleton config file, ~/.projmgr, edit this file. The file is a simple yaml configuration file structured like this
+This will create a empty skeleton config file, ~/.projmgr, edit this file. The file is a simple yaml configuration file structured like this:
+
 
 	rubyvirustotal: 
 	  name: ruby-virustotal
@@ -42,7 +43,14 @@ This will create a empty skeleton config file, ~/.projmgr, edit this file. The f
 		path: 
 		type: 
 
-To configure ProjMgr just change projectname/name/path/type to fit your projects. Once the config file is edited you are ready to go. 
+To configure ProjMgr just change projectname/name/path/type to fit your projects. 
+
+	projectname - can be any string identifier
+	name - any string displayed during update/checks
+	path - the path to the repo to check/update
+	type - type of the repo either 'svn' or 'git'
+
+Once the config file is edited everything is ready to go. 
 
 Simple usage is as follows:
 
