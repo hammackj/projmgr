@@ -15,11 +15,19 @@ require 'projmgr'
 
 module ProjMgr
 	
+	# ProjMgr Application class
+	#
+	# @author Jacob Hammack <jacob.hammack@hammackj.com>
 	class ProjMgr
+		
+		# Creates a ProjMgr instance
+		#
 		def initialize
 			@root = `pwd`
 		end
-			
+		
+		# Main class for the ProjMgr command line tool
+		#
 		def main
 			Choice.options do
 				banner "ProjMgr - v#{VERSION}" 
@@ -80,7 +88,6 @@ module ProjMgr
 	
 					footer ''
 				end
-		
 
 				if ARGV.length == 0
 					puts Choice.help
@@ -94,24 +101,31 @@ module ProjMgr
 				end
 					
 				begin
-					@repos.each_key do |key|			
-						if @repos[key]['type'] == "svn"
-							repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
-						elsif @repos[key]['type'] == "git"
-							repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
-						end
+					@threads = Array.new
+					@repos.each_key do |key|
+						t = Thread.new do
+							if @repos[key]['type'] == "svn"
+								repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+							elsif @repos[key]['type'] == "git"
+								repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+							end
 					
-						if repo == nil
-								puts "[!] #{key} is a malformed entry please correct it."
-								next
-						end
+							if repo == nil
+									puts "[!] #{key} is a malformed entry please correct it."
+									next
+							end
 															
-						if Choice.choices[:check_local_changes] != nil
-							puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
-						elsif Choice.choices[:update] != nil
-							puts "[*] Updating #{@repos[key]['name']}..."
-							repo.update
+							if Choice.choices[:check_local_changes] != nil
+								puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
+							elsif Choice.choices[:update] != nil
+								puts "[*] Updating #{@repos[key]['name']}...\n #{repo.update}"
+							end
 						end
+						@threads << t
+					end
+					
+					@threads.each do |t| 
+						t.join 
 					end
 				rescue Exception => e
 					puts "[!] Caught Exception: #{e.inspect}"
