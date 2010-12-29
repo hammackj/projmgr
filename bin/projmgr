@@ -109,7 +109,7 @@ module ProjMgr
 						if Choice.choices[:check_local_changes] != nil
 							puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
 						elsif Choice.choices[:update] != nil
-							puts "[*] Updating #{@repos[key]['name']} ..."
+							puts "[*] Updating #{@repos[key]['name']}..."
 							repo.update
 						end
 					end
