@@ -8,7 +8,7 @@ require 'projmgr'
 Gem::Specification.new do |s|
 	s.name 									= 'projmgr'
 	s.version 							= ProjMgr::VERSION
-	s.homepage 							= "http://www.hammackj.com/"
+	s.homepage 							= "http://github.com/hammackj/projmgr/"
 	s.summary 							= "ProjMgr"
 	s.description 					= "ProjMgr is a source code managment tool for automating project managment"
 	
@@ -19,6 +19,11 @@ Gem::Specification.new do |s|
 	s.default_executable 		= 'projmgr'
 	s.executables 					= ['projmgr']
 	s.require_paths 				= ["lib"]
+	
+	s.required_rubygems_version = ">= 1.3.6"
+	s.rubyforge_project         = "projmgr"
+	
+	s.add_development_dependency "rspec"
 	
 	s.has_rdoc 							= 'yard'
 	s.extra_rdoc_files 			= ["README.md", "LICENSE", "NEWS.md", "TODO.md"]
