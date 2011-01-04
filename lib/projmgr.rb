@@ -1,10 +1,10 @@
 
 module ProjMgr
-	VERSION = "0.0.1"
+	APP_NAME = "projmgr"
+	VERSION = "0.0.2"
 	CONFIG_FILE = "~/.projmgr"
 end
 
-require 'rubygems'
 require 'choice'
 require 'yaml'
 
