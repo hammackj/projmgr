@@ -2,8 +2,11 @@
 # encoding: utf-8
 
 # projmgr - A source code control managment tool
+# Jacob Hammack <jacob.hammack@hammackj.com>
+# http://www.hammackj.com
 # 
-# hammackj - 12-27-2010 - Version 0.0.1 
+# hammackj - 12-27-2010 - Version 0.0.1
+# hammackj - 01-05-2011 - Version 0.0.2
 #
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
@@ -11,6 +14,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
 $stdout.sync = true
 $stderr.sync = true
 
+require 'rubygems'
 require 'projmgr'
 
 module ProjMgr
@@ -30,10 +34,10 @@ module ProjMgr
 		#
 		def main
 			Choice.options do
-				banner "ProjMgr - v#{VERSION}" 
+				banner "#{APP_NAME} - v#{VERSION}" 
 				header 'Jacob Hammack'
 				header 'http://hammackj.com'
-				header 'Usage: projmgr [OPTIONS]'
+				header 'Usage: #{APP_NAME} [OPTIONS]'
 				header ''
 
 				option :check_local_changes do
@@ -54,8 +58,9 @@ module ProjMgr
 					action do						
 						if File.exists?(File.expand_path(CONFIG_FILE)) == false
 							File.open(File.expand_path(CONFIG_FILE), 'w+') do |f| 
-								f.write("projectname: \n\tname: \n\tpath: \n\ttype: \n\n") 
-								f.write("projectname: \n\tname: \n\tpath: \n\ttype: \n") 
+								3.times do
+									f.write("projectname: \n\tname: \n\tpath: \n\ttype: \n\n") 
+								end
 							end
 
 							puts "[*] An empty #{CONFIG_FILE} has been created. Please edit and fill in the correct values."
@@ -81,7 +86,7 @@ module ProjMgr
 					long '--version'
 					desc 'Show version'
 					action do
-						puts "ProjMgr - v#{VERSION}"
+						puts "#{APP_NAME} - v#{VERSION}"
 						exit
 					end
 				end
