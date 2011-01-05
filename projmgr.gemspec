@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
 	s.homepage 							= "http://github.com/hammackj/projmgr/"
 	s.summary 							= "ProjMgr"
 	s.description 					= "ProjMgr is a source code managment tool for automating project managment"
+	s.license								= "BSD"
 	
 	s.author 								= "Jacob Hammack"
 	s.email 								= "jacob.hammack@hammackj.com"
