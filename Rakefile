@@ -8,3 +8,7 @@ end
 task :release => :build do
   system "gem push projmgr-#{ProjMgr::VERSION}.gem"
 end
+
+task :clean do
+	system "rm *.gem"
+end
