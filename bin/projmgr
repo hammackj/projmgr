@@ -7,6 +7,7 @@
 # 
 # hammackj - 12-27-2010 - Version 0.0.1
 # hammackj - 01-05-2011 - Version 0.0.2
+# hammackj - 01-08-2011 - Version 0.0.3
 #
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
@@ -15,6 +16,9 @@ $stdout.sync = true
 $stderr.sync = true
 
 require 'rubygems'
+require 'choice'
+require 'yaml'
+
 require 'projmgr'
 
 module ProjMgr
@@ -52,6 +56,11 @@ module ProjMgr
 					desc 'Updates each configured scm repository'
 				end
 				
+				option :checkout do
+					long '--checkout-repos'
+					desc "Checks out each repo if nothing exists at the 'path' variable"
+				end
+				
 				option :create_config do
           long '--create-config'
           desc 'Creates a skeleton config file to use'
@@ -59,7 +68,7 @@ module ProjMgr
 						if File.exists?(File.expand_path(CONFIG_FILE)) == false
 							File.open(File.expand_path(CONFIG_FILE), 'w+') do |f| 
 								3.times do
-									f.write("projectname: \n\tname: \n\tpath: \n\ttype: \n\n") 
+									f.write("projectname: \n\tname: \n\tpath: \n\ttype: \n\turl: \n\n") 
 								end
 							end
 
@@ -110,20 +119,24 @@ module ProjMgr
 					@repos.each_key do |key|
 						t = Thread.new do
 							if @repos[key]['type'] == "svn"
-								repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+								repo = Svn.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root'], @repos[key]['url']
 							elsif @repos[key]['type'] == "git"
-								repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root']
+								repo = Git.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root'], @repos[key]['url']
+							elsif @repos[key]['type'] == "cvs"
+								repo = Cvs.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root'], @repos[key]['url']
 							end
 					
 							if repo == nil
-									puts "[!] #{key} is a malformed entry please correct it."
+									print "[!] #{key} is a malformed entry please correct it.\n"
 									next
 							end
 															
 							if Choice.choices[:check_local_changes] != nil
-								puts "[!] #{@repos[key]['name']} has local changes" if repo.has_local_changes?
+								print "[!] #{@repos[key]['name']} has local changes\n" if repo.has_local_changes?
 							elsif Choice.choices[:update] != nil
-								puts "[*] Updating #{@repos[key]['name']}...\n #{repo.update}"
+								print "[*] Updating #{@repos[key]['name']}...\n #{repo.update}\n"
+							elsif Choice.choices[:checkout] != nil
+								print "[*] Checking out #{@repos[key]['name']}...\n #{repo.checkout}\n"
 							end
 						end
 						@threads << t
