@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'projmgr/scm'
 
 module ProjMgr
@@ -6,6 +8,21 @@ module ProjMgr
 	#
 	# @author Jacob Hammack <jacob.hammack@hammackj.com>
 	class Git < Scm
+		alias :checkout :clone
+
+		# Checks out a git repo and places it, in the path specified by the @path variable
+		#
+		# @return [String] The results from the 'git clone' command
+		def checkout
+			if path_exists? == true
+				return "Path Exists, cannot checkout onto an existing repo"
+			else
+				parent = project_parent_directory
+				results = `cd #{parent} && git clone #{@url} && cd #{@root}`
+			end
+			
+			return results
+		end
 
 		# Checks for updates in the target repo
 		# 
