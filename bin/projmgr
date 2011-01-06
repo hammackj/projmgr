@@ -41,7 +41,7 @@ module ProjMgr
 				banner "#{APP_NAME} - v#{VERSION}" 
 				header 'Jacob Hammack'
 				header 'http://hammackj.com'
-				header 'Usage: #{APP_NAME} [OPTIONS]'
+				header "Usage: #{APP_NAME} [OPTIONS]"
 				header ''
 
 				option :check_local_changes do
