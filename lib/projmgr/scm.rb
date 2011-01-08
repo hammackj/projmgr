@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'pathname'
+
 module ProjMgr
 	
 	# A parent class for interacting with a source code repository
@@ -34,6 +36,13 @@ module ProjMgr
 		def project_parent_directory
 			pn = Pathname.new @path	
 			return pn.parent.to_s
+		end
+		
+		# Overloaded inspect
+		#
+		# @return [String] A representation of the class as a string
+		def inspect
+			return "Project: #{@project}\n" + "Path: #{@path}\n" + "Root: #{@root}\n" + "Url: #{@url}\n"
 		end
 	end
 end
