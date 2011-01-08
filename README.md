@@ -32,16 +32,19 @@ This will create a empty skeleton config file, ~/.projmgr, edit this file. The f
 	  name: ruby-virustotal
 	  path: ~/Projects/public/ruby-virustotal
 	  type: git
+		url: git@github.com:hammackj/ruby-virustotal.git
 
 	nessusdb:
 	  name: nessusdb
 	  path: ~/Projects/public/nessusdb
 	  type: git
+		url: git@github.com:hammackj/nessusdb.git
 
 	projectname: 
 		name: 
 		path: 
 		type: 
+		url:
 
 To configure ProjMgr just change projectname/name/path/type to fit your projects. 
 
@@ -49,6 +52,7 @@ To configure ProjMgr just change projectname/name/path/type to fit your projects
 	name - any string displayed during update/checks
 	path - the path to the repo to check/update
 	type - type of the repo either 'svn' or 'git'
+	url - the original url of the repo
 
 Once the config file is edited everything is ready to go. 
 
