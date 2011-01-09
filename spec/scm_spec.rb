@@ -17,7 +17,6 @@ module ProjMgr
 
 		describe Scm, ".path_exists?" do
 			it "returns false for /tmp/projmgr/doesntexist" do
-				#@scm = Scm.new nil, '/tmp/projmgr/doesntexist', nil, nil
 				@scm.path = '/tmp/projmgr/doesntexist'
 				@scm.path_exists?.should == false
 			end
