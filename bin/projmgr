@@ -1,13 +1,14 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
-# projmgr - A source code control managment tool
+# projmgr - ProjMgr is a simple source code project manager for updating and checking local changes on multiple projects at once.
 # Jacob Hammack <jacob.hammack@hammackj.com>
 # http://www.hammackj.com
 # 
 # hammackj - 12-27-2010 - Version 0.0.1
 # hammackj - 01-05-2011 - Version 0.0.2
 # hammackj - 01-09-2011 - Version 0.0.3
+# hammackj - 01-09-2011 - Version 0.0.4
 #
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
@@ -136,8 +137,8 @@ module ProjMgr
 																
 								if status[0] == true
 									print "[!] #{@repos[key]['name']} has local changes\n"
-								else
-									print "[!] #{@repos[key]['name']} #{status[1]}\n"
+								#else
+								#	print "[!] #{@repos[key]['name']} #{status[1]}\n"
 								end
 							elsif Choice.choices[:update] != nil
 								print "[*] Updating #{@repos[key]['name']}...\n #{repo.update}\n"
