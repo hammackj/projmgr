@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
 	s.rubyforge_project         = ProjMgr::APP_NAME
 	
 	s.add_development_dependency "rspec"
+	s.add_development_dependency "rcov"
 	
 	s.has_rdoc 							= 'yard'
 	s.extra_rdoc_files 			= ["README.md", "LICENSE", "NEWS.md", "TODO.md"]
