@@ -8,3 +8,8 @@ TODO
 		- CVS
 		- Mercurial	
 	- Add more rspec tests		
+		- Git Class
+		- Svn Class
+		- Application class
+		- Cvs Class
+		
