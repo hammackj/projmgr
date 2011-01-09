@@ -8,6 +8,7 @@ module ProjMgr
 	#
 	# @author Jacob Hammack <jacob.hammack@hammackj.com>
 	class Scm
+		attr_accessor :project, :path, :root, :url
 		
 		# Creates a instance of a SCM repository
 		#
