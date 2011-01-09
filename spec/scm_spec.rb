@@ -29,5 +29,16 @@ module ProjMgr
 				@scm.project_parent_directory.should == '/tmp'
 			end
 		end
+		
+		describe Scm, ".inspect" do
+			it "returns Project/Path/Root/Url for inspect " do
+				@scm.project = "/tmp/projmgr"
+				@scm.path = "/tmp"
+				@scm.root = "/"
+				@scm.url = "http://projmgr.hammackj.com/"
+				
+				@scm.inspect.should == "Project: /tmp/projmgr\nPath: /tmp\nRoot: /\nUrl: http://projmgr.hammackj.com/\n"
+			end
+		end
 	end
 end
