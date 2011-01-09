@@ -25,9 +25,7 @@ module ProjMgr
 	
 		describe Scm, ".project_parent_directory" do
 			it "returns /tmp for /tmp/projmgr_test" do
-				`mkdir -p /tmp/projmgr_test`
-			
-				@scm = Scm.new nil, '/tmp/projmgr_test', nil, nil
+				@scm.path = '/tmp/projmgr_test'
 				@scm.project_parent_directory.should == '/tmp'
 			end
 		end
