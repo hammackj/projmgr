@@ -1,3 +1,7 @@
+0.0.4 (January 09, 2011)
+===
+	- Fixed output error
+
 0.0.3 (January 09, 2011)
 ===
 	- Added rspec tests for the Scm class
