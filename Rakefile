@@ -15,6 +15,7 @@ end
 
 task :clean do
 	system "rm *.gem"
+	system "rm -rf coverage"
 end
 
 desc "Run all examples with RCov"
