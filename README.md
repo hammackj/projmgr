@@ -9,8 +9,6 @@ Requirements
 * ruby 
 * rubygems
 * choice
-* yaml 
-
 
 Installation
 ---
