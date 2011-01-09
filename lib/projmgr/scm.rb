@@ -17,6 +17,7 @@ module ProjMgr
 		# @param root path back to the root
 		# @param url url of the repo for checkout/etc
 		#
+		# @return [Scm] returns a new instance of the Scm class
 		def initialize project=nil, path=nil, root=nil, url=nil
 			@project = project
 			@path = path
