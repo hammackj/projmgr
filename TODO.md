@@ -10,4 +10,5 @@
 	- Svn Class
 	- Application class
 	- Cvs Class
+- Remove Choice and switch to option parser. Choice seems to be abandoned and has issues with ruby 1.9.x
 		
