@@ -70,7 +70,7 @@ module ProjMgr
 						if File.exists?(File.expand_path(CONFIG_FILE)) == false
 							File.open(File.expand_path(CONFIG_FILE), 'w+') do |f| 
 								3.times do
-									f.write("projectname: \n\tname: \n\tpath: \n\ttype: \n\turl: \n\n") 
+									f.write("projectname: \n  name: \n  path: \n  type: \n  url: \n\n") 
 								end
 							end
 
