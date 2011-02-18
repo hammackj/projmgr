@@ -1,3 +1,6 @@
+# 0.0.6 (February 17, 2011)
+- Fixed a issue with tabs being generated instead of spaces in the yaml file
+
 # 0.0.5 (February 07, 2011)
 - Minor version bump
 - Fixed the dependencies to stop installing an old version of rspec

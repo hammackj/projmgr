@@ -10,6 +10,7 @@
 # hammackj - 01-09-2011 - Version 0.0.3
 # hammackj - 01-09-2011 - Version 0.0.4
 # hammackj - 02-07-2011 - Version 0.0.5
+# hammackj - 02-17-2011 - Version 0.0.6
 #
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
