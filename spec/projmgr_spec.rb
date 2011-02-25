@@ -10,7 +10,7 @@ module ProjMgr
 			data = cmd.readlines.to_s
 			cmd.close
 			
-			data.length.should == 537
+			data.length.should == 648
     end
   end
 

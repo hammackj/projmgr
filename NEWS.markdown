@@ -1,3 +1,6 @@
+# 0.0.7 (February 24, 2011)
+- Moved to OptionParser instead of Choice. Choice seems to be abandoned and has issues with ruby 1.9.2+
+
 # 0.0.6 (February 17, 2011)
 - Fixed a issue with tabs being generated instead of spaces in the yaml file
 

@@ -1,6 +1,6 @@
 # TODO
 
-## 0.0.7 (March 25, 2011)
+## 0.0.8 (March 25, 2011)
 - Add a detect option, to find projects in a directory not managed
 - Add support for other SCM's
 	- CVS
@@ -10,5 +10,3 @@
 	- Svn Class
 	- Application class
 	- Cvs Class
-- Remove Choice and switch to option parser. Choice seems to be abandoned and has issues with ruby 1.9.x
-		

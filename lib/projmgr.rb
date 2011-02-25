@@ -2,7 +2,7 @@
 
 module ProjMgr
 	APP_NAME = "projmgr"
-	VERSION = "0.0.6"
+	VERSION = "0.0.7"
 	CONFIG_FILE = "~/.projmgr"
 end
 

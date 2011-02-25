@@ -19,7 +19,7 @@ $stdout.sync = true
 $stderr.sync = true
 
 require 'rubygems'
-require 'choice'
+require 'optparse'
 require 'yaml'
 
 require 'projmgr'
@@ -29,7 +29,7 @@ module ProjMgr
 	# ProjMgr Application class
 	#
 	# @author Jacob Hammack <jacob.hammack@hammackj.com>
-	class ProjMgr
+	class Application
 		
 		# Creates a ProjMgr instance
 		#
@@ -40,127 +40,115 @@ module ProjMgr
 		# Main class for the ProjMgr command line tool
 		#
 		def main
-			Choice.options do
-				banner "#{APP_NAME} - v#{VERSION}" 
-				header 'Jacob Hammack'
-				header 'http://hammackj.com'
-				header "Usage: #{APP_NAME} [OPTIONS]"
-				header ''
+			@options = {}
 
-				option :check_local_changes do
-					short '-c'
-					long '--check_local_changes'
-					desc 'Checks local changes in configured scm repositories'
+			opt = OptionParser.new do |opt|
+				opt.banner =	"#{APP_NAME} v#{VERSION}\nJacob Hammack\nhttp://www.hammackj.com\n\n"
+				opt.banner << "Usage: #{APP_NAME} <options>"
+				opt.separator('')
+
+				opt.on('-c','--check-local-changes','Checks for local changes in configured SCM repositories') do |option|
+					@options[:check] = option
 				end
-	
-				option :update do
-					short '-u'
-					long '--update'
-					desc 'Updates each configured scm repository'
+
+				opt.on('-u','--update-repos','Updates each configured SCM repositories') do |option|
+					@options[:update] = option
 				end
-				
-				option :checkout do
-					long '--checkout-repos'
-					desc "Checks out each repo if nothing exists at the 'path' variable"
+
+				opt.on('--checkout-repos','Checks out each of the configured repositories') do |option|
+					@options[:checkout] = option
 				end
-				
-				option :create_config do
-          long '--create-config'
-          desc 'Creates a skeleton config file to use'
-					action do						
-						if File.exists?(File.expand_path(CONFIG_FILE)) == false
-							File.open(File.expand_path(CONFIG_FILE), 'w+') do |f| 
-								3.times do
-									f.write("projectname: \n  name: \n  path: \n  type: \n  url: \n\n") 
-								end
+
+				opt.on('--create-config','Creates a skeleton configuration file to be used') do |option|
+					if File.exists?(File.expand_path(CONFIG_FILE)) == false
+						File.open(File.expand_path(CONFIG_FILE), 'w+') do |f| 
+							3.times do
+								f.write("projectname: \n	name: \n	path: \n	type: \n	url: \n\n") 
 							end
-
-							puts "[*] An empty #{CONFIG_FILE} has been created. Please edit and fill in the correct values."
-							exit
-						else
-							puts "[!]  #{CONFIG_FILE} already exists. Please delete it if you wish to re-create it."
-							exit
 						end
-					end
-        end
 
-				separator ''
-				separator 'Other Options'
-
-				option :help do
-					short '-h'
-					long '--help'
-					desc 'Show this message'
-				end
-
-				option :version do
-					short '-v'
-					long '--version'
-					desc 'Show version'
-					action do
-						puts "#{APP_NAME} - v#{VERSION}"
+						puts "[*] An empty #{CONFIG_FILE} has been created. Please edit and fill in the correct values."
+						exit
+					else
+						puts "[!]	 #{CONFIG_FILE} already exists. Please delete it if you wish to re-create it."
 						exit
 					end
 				end
-	
-					footer ''
-				end
-
-				if ARGV.length == 0
-					puts Choice.help
-				end
+								
+				opt.separator ''
+				opt.separator 'Other Options'
 			
-				if File.exists?(File.expand_path(CONFIG_FILE))
-					@repos = YAML.load_file File.expand_path(CONFIG_FILE)
-				else
-					puts "[!] #{CONFIG_FILE} does not exist. Please run projmgr --create-config, to create it."
+				opt.on_tail('-v', '--version', "Shows application version information") do
+					puts "#{APP_NAME} - v#{VERSION}"
 					exit
 				end
-					
-				begin
-					@threads = Array.new
-					@repos.each_key do |key|
-						t = Thread.new do
-							if @repos[key]['type'] == "svn"
-								repo = Svn.new @repos[key]['name'], @repos[key]['path'], @root, @repos[key]['url']
-							elsif @repos[key]['type'] == "git"
-								repo = Git.new @repos[key]['name'], @repos[key]['path'], @root, @repos[key]['url']
-							#elsif @repos[key]['type'] == "cvs"
-							#	repo = Cvs.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root'], @repos[key]['url']
-							end
-										
-							if repo == nil
-									print "[!] #{key} is a malformed entry please correct it.\n"
-									next
-							end
-															
-							if Choice.choices[:check_local_changes] != nil
-								status = repo.has_local_changes?
-																
-								if status[0] == true
-									print "[!] #{@repos[key]['name']} has local changes\n"
-								#else
-								#	print "[!] #{@repos[key]['name']} #{status[1]}\n"
-								end
-							elsif Choice.choices[:update] != nil
-								print "[*] Updating #{@repos[key]['name']}...\n #{repo.update}\n"
-							elsif Choice.choices[:checkout] != nil
-								print "[*] Checking out #{@repos[key]['name']}...#{repo.checkout}\n"
-							end
-						end
-						@threads << t
-					end
-					
-					@threads.each do |t| 
-						t.join 
-					end
-				rescue Exception => e
-					puts "[!] Caught Exception, if you feel this is a error please report it at http://github.com/hammackj/projmgr/issues\n"
-					puts "#{e.inspect}\n #{e.backtrace}"
+
+				opt.on_tail("-?", "--help", "Show this message") do
+					puts opt.to_s + "\n"
+					exit
 				end
+
+				opt.separator ''
+			end
+
+			if ARGV.length != 0 
+				opt.parse!
+			else
+				puts opt.to_s + "\n"
+				exit
+			end
+
+			if File.exists?(File.expand_path(CONFIG_FILE))
+				@repos = YAML.load_file File.expand_path(CONFIG_FILE)
+			else
+				puts "[!] #{CONFIG_FILE} does not exist. Please run projmgr --create-config, to create it."
+				exit
+			end
+
+			begin
+				@threads = Array.new
+				@repos.each_key do |key|
+					t = Thread.new do
+						if @repos[key]['type'] == "svn"
+							repo = Svn.new @repos[key]['name'], @repos[key]['path'], @root, @repos[key]['url']
+						elsif @repos[key]['type'] == "git"
+							repo = Git.new @repos[key]['name'], @repos[key]['path'], @root, @repos[key]['url']
+						#elsif @repos[key]['type'] == "cvs"
+						# repo = Cvs.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root'], @repos[key]['url']
+						end
+
+						if repo == nil
+								print "[!] #{key} is a malformed entry please correct it.\n"
+								next
+						end
+
+						if @options[:check] != nil
+							status = repo.has_local_changes?
+
+							if status[0] == true
+								print "[!] #{@repos[key]['name']} has local changes\n"
+							#else
+							# print "[!] #{@repos[key]['name']} #{status[1]}\n"
+							end
+						elsif @options[:update] != nil
+							print "[*] Updating #{@repos[key]['name']}...\n #{repo.update}\n"
+						elsif @options[:checkout] != nil
+							print "[*] Checking out #{@repos[key]['name']}...#{repo.checkout}\n"
+						end
+					end
+					@threads << t
+				end
+
+				@threads.each do |t| 
+					t.join 
+				end
+			rescue Exception => e
+				puts "[!] Caught Exception, if you feel this is a error please report it at http://github.com/hammackj/projmgr/issues\n"
+				puts "#{e.inspect}\n #{e.backtrace}"
 			end
 		end
+	end
 end
 
-app = ProjMgr::ProjMgr.new
+app = ProjMgr::Application.new
 app.main

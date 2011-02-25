@@ -24,12 +24,10 @@ Gem::Specification.new do |s|
 	s.required_rubygems_version = ">= 1.3.6"
 	s.rubyforge_project         = ProjMgr::APP_NAME
 	
-	s.add_development_dependency("rspec", ">= 2.4.0")
+	s.add_development_dependency("rspec", ">= 2.5.0")
 	s.add_development_dependency("rcov", ">= 0.9.9")
 	
 	s.has_rdoc 							= 'yard'
-	s.extra_rdoc_files 			= ["README.md", "LICENSE", "NEWS.md", "TODO.md"]
-	
-	s.add_dependency('choice', '>= 0.1.4')
+	s.extra_rdoc_files 			= ["README.markdown", "LICENSE", "NEWS.markdown", "TODO.markdown"]
 	
 end
