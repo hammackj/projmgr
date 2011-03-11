@@ -1,25 +1,21 @@
-ProjMgr
-===
+# ProjMgr
+
 
 ProjMgr is a simple source code project manager for updating and checking local changes on multiple projects at once.
 
-The current version is v0.0.6
+The current version is v0.0.7
 
-Requirements
----
+## Requirements
 
 * ruby 
 * rubygems
-* choice
 
-Installation
----
+## Installation
 Installation is really easy just gem install!
 
 	% sudo gem install projmgr
 	
-Usage
----
+## Usage
 Using ProjMgr is fairly simple. Once installation is complete type to create a skeleton config file:
 
 	% projmgr --create-file
@@ -58,16 +54,14 @@ Once the config file is edited everything is ready to go.
 
 Simple usage is as follows:
 
-Checking for local changes
-----
+### Checking for local changes
 
 	% projmgr -c
 	[!] ProjMgr has local changes
 	[!] nessusdb has local changes
 	
 
-Updating each project
-----
+### Updating each project
 
 	% projmgr -u
 	[*] Updating ProjMgr...
@@ -77,6 +71,5 @@ Updating each project
 
 That covers all of the basic usage of ProjMgr.
 	
-Contact
----
+## Contact
 You can reach me at jacob[dot]hammack[at]hammackj[dot]com.
