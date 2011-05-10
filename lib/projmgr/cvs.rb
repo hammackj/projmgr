@@ -36,7 +36,8 @@ module ProjMgr
 	  		#cmd = IO.popen("cd #{@path} && cvs update && cd #{@root}", :err=> :out)
 				results = `cd #{@path} && cvs update 2>&1 && cd #{@root}`
 				
-				puts "results = #{results.class}= #{results}\n===\n"
+#				puts "results = #{results.class}= #{results}\n===\n"
+				results = results.split("\n")
 				
 #				results.each do |line|
 #					if line =~ /cvs update: /
@@ -44,9 +45,9 @@ module ProjMgr
 #					end
 #				end
 
-#				results.delete_if do |x|
-#					x =~ /cvs update: /
-#				end
+				results.delete_if do |x|
+					x =~ /cvs update: /
+				end
 						
 				if results == nil
 					return ""
