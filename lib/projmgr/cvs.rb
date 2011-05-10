@@ -13,39 +13,47 @@ module ProjMgr
 		#
 		# @return [String] The results from the 'cvs co' command
 		def checkout
-			results = `cd #{@path} && cd .. && cvs co #{@url} && cd #{@root}`
-			
-			return results
+			if path_exists? == true
+				return "path exists, cannot checkout onto an existing repo"
+			else
+				parent = project_parent_directory
+				
+				cmd = IO.popen "cd #{parent} && CVSROOT=#{@url} cvs co #{@project} &> /dev/null && cd #{@root}"
+				results = cmd.readlines
+				cmd.close
+
+				return "project checked out to #{parent}/#{@project}"
+			end
 		end
 
 		# Checks for updates in the target repo
 		# 
-		# @return [String] the results of 'git pull' on the target repository
+		# @return [String] the results of 'cvs update' on the target repository
 		def update
-	  	results = `cd #{@path} && cvs update -dPA && cd #{@root}`
-
-	  	if results =~ /Already up-to-date./
-	  	  return "Already up-to-date!\n"
-	  	else
-	  	  return results  	  
-		  end
+			if path_exists? == false
+				return "path does not exists, cannot update repository"
+			else
+	  		results = `cd #{@path} && cvs update && cd #{@root}`
+			
+				return results
+			end
 		end
 		
 		# Checks for local changes in the target repository
 		#
 		# @return [Boolean] if there is local changes or not
 		def has_local_changes?
-		  results = `cd #{@path} && cvs status && cd #{@root}`
+			if path_exists? == false
+				return false, "path does not exists, please check the path or check it out"
+			else
+		  	results = `cd #{@path} && cvs -q status | grep ^[?F] | grep -v \"to-date\" && cd #{@root}`
 
-		  #if results !~ /nothing to commit/ 
-			#	return true
-			#elsif results =~ /Your branch is ahead of/
-			#	return true
-			#elsif results =~ /Untracked files/
-			#	return true
-		  #else
-				return false
-			#end
+			  if results =~ /\? (.*)/ 
+					return true
+				else
+					return false
+				end
+			end
 		end
 	end	
 end
