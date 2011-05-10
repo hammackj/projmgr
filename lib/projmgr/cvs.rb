@@ -49,9 +49,9 @@ module ProjMgr
 		  	results = `cd #{@path} && cvs -q status | grep ^[?F] | grep -v \"to-date\" && cd #{@root}`
 
 			  if results =~ /\? (.*)/ 
-					return true
+					return true, "has local changes"
 				else
-					return false
+					return false, "has no local changes"
 				end
 			end
 		end
