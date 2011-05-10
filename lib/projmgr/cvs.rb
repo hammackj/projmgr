@@ -37,10 +37,14 @@ module ProjMgr
 				results = cmd.readlines
 				cmd.close
 				
-				results.each do |line|
-					if line =~ /cvs update/
-						results.delete line
-					end
+#				results.each do |line|
+#					if line =~ /cvs update: /
+#						results.delete line
+#					end
+#				end
+
+				results.delete_if do |x|
+					x =~ /cvs update: /
 				end
 						
 				return results
