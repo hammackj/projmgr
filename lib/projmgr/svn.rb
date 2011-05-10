@@ -38,7 +38,7 @@ module ProjMgr
 				return "path does not exists, cannot update repository"
 			end
 
-			return results
+			return results.chomp
 		end
 
 		# Checks for local changes in the target repository

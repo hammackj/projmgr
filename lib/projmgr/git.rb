@@ -37,7 +37,7 @@ module ProjMgr
 				results = `cd #{@path} && git pull && cd #{@root}`
 
 				if results =~ /Already up-to-date./
-					return "Already up-to-date!\n"
+					return "Already up-to-date!"
 				else
 					return results
 				end

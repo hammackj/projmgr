@@ -41,7 +41,7 @@ module ProjMgr
 				end
 						
 				if results.empty?
-					return "Already up-to-date!\n"
+					return "Already up-to-date!"
 				else
 					return results
 				end
