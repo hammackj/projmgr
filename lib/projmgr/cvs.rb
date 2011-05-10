@@ -34,9 +34,9 @@ module ProjMgr
 				return "path does not exists, cannot update repository"
 			else
 	  		#cmd = IO.popen("cd #{@path} && cvs update && cd #{@root}", :err=> :out)
-				results = `cd #{@path} && cvs update && cd #{@root}`
+				results = `cd #{@path} && cvs update 2>&1 && cd #{@root}`
 				
-				puts "results = #{results}\n===\n"
+				puts "results = #{results.class}= #{results}\n===\n"
 				
 #				results.each do |line|
 #					if line =~ /cvs update: /
