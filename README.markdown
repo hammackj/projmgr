@@ -3,17 +3,16 @@
 
 ProjMgr is a simple source code project manager for updating and checking local changes on multiple projects at once.
 
-The current version is v0.0.7
+The current version is v0.0.8
 
 ## Requirements
 
-* ruby 
-* rubygems
+* ruby / rubygems
 
 ## Installation
 Installation is really easy just gem install!
 
-	% sudo gem install projmgr
+	% gem install projmgr
 	
 ## Usage
 Using ProjMgr is fairly simple. Once installation is complete type to create a skeleton config file:
@@ -35,6 +34,18 @@ This will create a empty skeleton config file, ~/.projmgr, edit this file. The f
 	  path: ~/Projects/public/nessusdb
 	  type: git
 		url: git@github.com:hammackj/nessusdb.git
+
+	metasploit:
+   name: metasploit
+   path: ~/Projects/public/metasploit
+   type: svn
+   url: https://www.metasploit.com/svn/framework3/trunk/
+
+	cvstest:
+	  name: cvstest
+	  path: ~/Projects/public/cvstest
+	  type: cvs
+		url: hammackj@hammackj.com:/usr/local/cvs
 
 	projectname: 
 		name: 
