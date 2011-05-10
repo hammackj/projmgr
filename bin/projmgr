@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 
 # projmgr - ProjMgr is a simple source code project manager for updating and checking local changes on multiple projects at once.
 # Jacob Hammack <jacob.hammack@hammackj.com>
@@ -11,6 +10,8 @@
 # hammackj - 01-09-2011 - Version 0.0.4
 # hammackj - 02-07-2011 - Version 0.0.5
 # hammackj - 02-17-2011 - Version 0.0.6
+# hammackj - 03-17-2011 - Version 0.0.7
+# hammackj - 05-10-2011 - Version 0.0.8
 #
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
@@ -113,8 +114,8 @@ module ProjMgr
 							repo = Svn.new @repos[key]['name'], @repos[key]['path'], @root, @repos[key]['url']
 						elsif @repos[key]['type'] == "git"
 							repo = Git.new @repos[key]['name'], @repos[key]['path'], @root, @repos[key]['url']
-						#elsif @repos[key]['type'] == "cvs"
-						# repo = Cvs.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root'], @repos[key]['url']
+						elsif @repos[key]['type'] == "cvs"
+						 repo = Cvs.new @repos[key]['name'], @repos[key]['path'], @repos[key]['root'], @repos[key]['url']
 						end
 
 						if repo == nil
