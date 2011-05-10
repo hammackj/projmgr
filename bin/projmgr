@@ -132,7 +132,7 @@ module ProjMgr
 							# print "[!] #{@repos[key]['name']} #{status[1]}\n"
 							end
 						elsif @options[:update] != nil
-							print "[*] Updating #{@repos[key]['name']}...\n #{repo.update}\n"
+							print "[*] Updating #{@repos[key]['name']}...#{repo.update}\n"
 						elsif @options[:checkout] != nil
 							print "[*] Checking out #{@repos[key]['name']}...#{repo.checkout}\n"
 						end
