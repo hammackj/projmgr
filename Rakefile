@@ -11,6 +11,7 @@ end
  
 task :release => :build do
   system "gem push projmgr-#{ProjMgr::VERSION}.gem"
+	puts "Just released Projmgr v#{ProjMgr::VERSION}. Projmgr is always available in RubyGems!"
 end
 
 task :clean do
