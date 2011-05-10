@@ -37,6 +37,8 @@ module ProjMgr
 				results = cmd.readlines
 				cmd.close
 				
+				puts "results = #{results}\n===\n"
+				
 #				results.each do |line|
 #					if line =~ /cvs update: /
 #						results.delete line
