@@ -33,9 +33,8 @@ module ProjMgr
 			if path_exists? == false
 				return "path does not exists, cannot update repository"
 			else
-	  		cmd = IO.popen("cd #{@path} && cvs update && cd #{@root}", :err=> :out)
-				results = cmd.readlines
-				cmd.close
+	  		#cmd = IO.popen("cd #{@path} && cvs update && cd #{@root}", :err=> :out)
+				results = `cd #{@path} && cvs update && cd #{@root}`
 				
 				puts "results = #{results}\n===\n"
 				
@@ -45,9 +44,9 @@ module ProjMgr
 #					end
 #				end
 
-				results.delete_if do |x|
-					x =~ /cvs update: /
-				end
+#				results.delete_if do |x|
+#					x =~ /cvs update: /
+#				end
 						
 				if results == nil
 					return ""
