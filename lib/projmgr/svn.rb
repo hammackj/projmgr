@@ -37,8 +37,12 @@ module ProjMgr
 			else
 				return "path does not exists, cannot update repository"
 			end
-
-			return results.chomp
+			
+			if results.split("\n").size == 1
+				return results.chomp
+			else
+				return "\n" + results
+			end
 		end
 
 		# Checks for local changes in the target repository

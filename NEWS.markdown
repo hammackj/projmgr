@@ -1,5 +1,6 @@
 # 0.0.8 (May 10, 2011)
 - Add CVS support Checkin/Checkout/Local Changes
+- Fixed a few output issues
 
 # 0.0.7 (February 24, 2011)
 - Moved to OptionParser instead of Choice. Choice seems to be abandoned and has issues with ruby 1.9.2+
