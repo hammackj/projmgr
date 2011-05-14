@@ -1,3 +1,6 @@
+# 0.0.9 (May 13, 2011)
+- Fixed output of CVS update results
+
 # 0.0.8 (May 10, 2011)
 - Add CVS support Checkin/Checkout/Local Changes
 - Fixed a few output issues
