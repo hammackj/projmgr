@@ -3,7 +3,7 @@
 
 ProjMgr is a simple source code project manager for updating and checking local changes on multiple projects at once.
 
-The current version is v0.0.8
+The current version is v0.0.9
 
 ## Requirements
 
