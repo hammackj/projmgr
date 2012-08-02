@@ -1,9 +1,8 @@
 # ProjMgr
 
-
 ProjMgr is a simple source code project manager for updating and checking local changes on multiple projects at once.
 
-The current version is v0.0.9
+The current version is v1.0.0
 
 ## Requirements
 
@@ -13,7 +12,7 @@ The current version is v0.0.9
 Installation is really easy just gem install!
 
 	% gem install projmgr
-	
+
 ## Usage
 Using ProjMgr is fairly simple. Once installation is complete type to create a skeleton config file:
 
@@ -23,7 +22,7 @@ Using ProjMgr is fairly simple. Once installation is complete type to create a s
 This will create a empty skeleton config file, ~/.projmgr, edit this file. The file is a simple yaml configuration file structured like this:
 
 
-	rubyvirustotal: 
+	rubyvirustotal:
 	  name: ruby-virustotal
 	  path: ~/Projects/public/ruby-virustotal
 	  type: git
@@ -47,13 +46,13 @@ This will create a empty skeleton config file, ~/.projmgr, edit this file. The f
 	  type: cvs
 		url: hammackj@hammackj.com:/usr/local/cvs
 
-	projectname: 
-		name: 
-		path: 
-		type: 
+	projectname:
+		name:
+		path:
+		type:
 		url:
 
-To configure ProjMgr just change projectname/name/path/type to fit your projects. 
+To configure ProjMgr just change projectname/name/path/type to fit your projects.
 
 	projectname - can be any string identifier
 	name - any string displayed during update/checks
@@ -61,7 +60,7 @@ To configure ProjMgr just change projectname/name/path/type to fit your projects
 	type - type of the repo either 'svn' or 'git'
 	url - the original url of the repo
 
-Once the config file is edited everything is ready to go. 
+Once the config file is edited everything is ready to go.
 
 Simple usage is as follows:
 
@@ -70,7 +69,7 @@ Simple usage is as follows:
 	% projmgr -c
 	[!] ProjMgr has local changes
 	[!] nessusdb has local changes
-	
+
 
 ### Updating each project
 
@@ -81,6 +80,7 @@ Simple usage is as follows:
 	Already up-to-date!
 
 That covers all of the basic usage of ProjMgr.
-	
+
 ## Contact
-You can reach me at jacob[dot]hammack[at]hammackj[dot]com.
+For email inqueries please contact projmgr[@]arxopia.com
+

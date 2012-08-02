@@ -1,3 +1,7 @@
+# 1.0.0 (August 2012)
+- Corrected some spelling issues
+- Add BSD license to each file, transfered copyright to Arxopia LLC.
+
 # 0.0.9 (May 13, 2011)
 - Fixed output of CVS update results
 
@@ -26,10 +30,10 @@
 - Add support for checkout/clone for SVN and GIT
 - Add checks to see if the paths exist for each call that uses @path
 - Optimized most of the code
-	
+
 # 0.0.2 (January 04, 2011)
 - Minor bug fixes/typos
 
 # 0.0.1 (December 27, 2010)
 - Initial development
-	
+
